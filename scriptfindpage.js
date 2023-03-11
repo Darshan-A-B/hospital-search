@@ -54,40 +54,28 @@ defaultJobs.forEach(function(job) {
   jobListings.appendChild(jobListing);
 });
 
-// fetch user location on page load
-// Check if geolocation is supported
-if ("geolocation" in navigator) {
-    // If it is, try to get the user's location
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+if (navigator.permissions) {
+    navigator.permissions.query({name:'geolocation'}).then(function(result) {
+      if (result.state === 'granted') {
+        // Location service is enabled
+      } else if (result.state === 'prompt') {
+        // Location service permission is not yet granted, prompt the user to enable it
+        if (confirm("Please enable location services for this website.")) {
+          window.location.href = "settings://location"; // Redirect to location settings in mobile
+        }
+      } else if (result.state === 'denied') {
+        // Location service permission is denied, prompt the user to enable it
+        if (confirm("Please enable location services for this website.")) {
+          window.location.href = "settings://location"; // Redirect to location settings in mobile
+        }
+      }
+    });
   } else {
-    // If geolocation is not supported, display an error message
-    console.log("Geolocation is not supported on this device");
+    // Permissions API is not supported by this browser
   }
   
-  // Callback function for successful geolocation
-  function successCallback(position) {
-    // Code to execute when location is successfully obtained
-  }
-  
-  // Callback function for failed geolocation
-  function errorCallback(error) {
-    // Code to execute when location is not obtained
-    switch(error.code) {
-      case error.PERMISSION_DENIED:
-        console.log("User denied the request for Geolocation.");
-        break;
-      case error.POSITION_UNAVAILABLE:
-        console.log("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        console.log("The request to get user location timed out.");
-        break;
-      case error.UNKNOWN_ERROR:
-        console.log("An unknown error occurred.");
-        break;
-    }
-  }
-  
+
+// fetch user location on page load
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition(function(position) {
     const latitude = position.coords.latitude;
