@@ -62,17 +62,26 @@ if (navigator.permissions) {
         // Location service permission is not yet granted, prompt the user to enable it
         if (confirm("Please enable location services for this website.")) {
           window.location.href = "settings://location"; // Redirect to location settings in mobile
+          setTimeout(function() {
+            location.reload();
+          }, 10000); 
         }
       } else if (result.state === 'denied') {
         // Location service permission is denied, prompt the user to enable it
         if (confirm("Please enable location services for this website.")) {
           window.location.href = "settings://location"; // Redirect to location settings in mobile
+          setTimeout(function() {
+            location.reload();
+          }, 10000); // Reload the page after 10 seconds
         }
       }
     });
-  } else {
+  } 
+  
+  else {
     // Permissions API is not supported by this browser
   }
+  
   
 
 // fetch user location on page load
