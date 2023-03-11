@@ -55,6 +55,39 @@ defaultJobs.forEach(function(job) {
 });
 
 // fetch user location on page load
+// Check if geolocation is supported
+if ("geolocation" in navigator) {
+    // If it is, try to get the user's location
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+  } else {
+    // If geolocation is not supported, display an error message
+    console.log("Geolocation is not supported on this device");
+  }
+  
+  // Callback function for successful geolocation
+  function successCallback(position) {
+    // Code to execute when location is successfully obtained
+  }
+  
+  // Callback function for failed geolocation
+  function errorCallback(error) {
+    // Code to execute when location is not obtained
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        console.log("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        console.log("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        console.log("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        console.log("An unknown error occurred.");
+        break;
+    }
+  }
+  
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition(function(position) {
     const latitude = position.coords.latitude;
