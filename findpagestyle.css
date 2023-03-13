@@ -41,22 +41,22 @@ body {
     background-color: #666;
   }
   
-  .job-listing {
+  .hospital-listing {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
   }
   
-  .job-listing h2 {
+  .hospital-listing h2 {
     margin-top: 0;
   }
   
-  .job-listing p {
+  .hospital-listing p {
     margin-bottom: 10px;
   }
   
-  .job-listing .location {
+  .hospital-listing .location {
     font-style: italic;
   }
   
