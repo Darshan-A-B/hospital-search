@@ -1,57 +1,49 @@
 const form = document.querySelector('form');
-const jobListings = document.querySelector('#job-listings');
+const hospitalListings = document.querySelector('#hospital-listings');
 
-// dummy data for default job listings
-const defaultJobs = [
+// dummy data for default hospital listings
+const defaulthospitals = [
   {
-    title: 'UI Designer',
-    company: 'XYZ Inc.',
-    location: 'Los Angeles, CA',
-    description: 'We are looking for a skilled UI designer to join our team...',
-    latitude: 34.0522,
-    longitude: -118.2437
+    hospitalName: 'Davanagere hospital demo',
+    specialization: 'EYE',
+    location: 'Davanagere, karnataka',
+    description: 'Cheap and best treatment',
+    latitude: 14.4558702,
+    longitude: 75.9089417
   },
   {
-    title: 'Marketing Manager',
-    company: 'ABC Corp.',
-    location: 'New York, NY',
-    description: 'We are seeking an experienced marketing manager to join our team...',
-    latitude: 40.7128,
-    longitude: -74.0060
-  },
-  {
-    title: 'Sales Representative',
-    company: 'Acme Corp',
-    location: 'Chicago, IL',
-    description: 'We are seeking a talented sales representative to join our team...',
-    latitude: 41.8781,
-    longitude: -87.6298
+    hospitalName: 'Manipal hospital HAL ROAD',
+    specialization: 'General multi-speciality',
+    location: 'Bangalore, karnataka',
+    description: 'Cheap and best treatment',
+    latitude: 12.9593257,
+    longitude: 77.6569182
   },
 ];
 
-// display default job listings on page load
-defaultJobs.forEach(function(job) {
-  const jobListing = document.createElement('div');
-  jobListing.classList.add('job-listing');
+// display default hospital listings on page load
+defaulthospitals.forEach(function(hospital) {
+  const hospitalListing = document.createElement('div');
+  hospitalListing.classList.add('hospital-listing');
   
-  const title = document.createElement('h2');
-  title.textContent = job.title;
-  jobListing.appendChild(title);
+  const hospitalName = document.createElement('h2');
+  hospitalName.textContent = hospital.hospitalName;
+  hospitalListing.appendChild(hospitalName);
   
-  const company = document.createElement('p');
-  company.textContent = job.company;
-  jobListing.appendChild(company);
+  const specialization = document.createElement('p');
+  specialization.textContent = hospital.specialization;
+  hospitalListing.appendChild(specialization);
   
   const location = document.createElement('p');
   location.classList.add('location');
-  location.textContent = job.location;
-  jobListing.appendChild(location);
+  location.textContent = hospital.location;
+  hospitalListing.appendChild(location);
   
   const description = document.createElement('p');
-  description.textContent = job.description;
-  jobListing.appendChild(description);
+  description.textContent = hospital.description;
+  hospitalListing.appendChild(description);
   
-  jobListings.appendChild(jobListing);
+  hospitalListings.appendChild(hospitalListing);
 });
 
 if (navigator.permissions) {
@@ -92,41 +84,41 @@ if ("geolocation" in navigator) {
         const state = data.address.state;
         locationInput.value = `${city}, ${state}`;
         
-        // update distance for each job listing
-        defaultJobs.forEach(function(job) {
-          const distance = getDistance(latitude, longitude, job.latitude, job.longitude);
-          job.distance = distance;
+        // update distance for each hospital listing
+        defaulthospitals.forEach(function(hospital) {
+          const distance = getDistance(latitude, longitude, hospital.latitude, hospital.longitude);
+          hospital.distance = distance;
         });
         
-        // sort jobs by distance from user's location
-        defaultJobs.sort(function(a, b) {
+        // sort hospitals by distance from user's location
+        defaulthospitals.sort(function(a, b) {
           return a.distance - b.distance;
         });
         
-        // display job listings in order of near to far
-        jobListings.innerHTML = '';
-        defaultJobs.forEach(function(job) {
-          const jobListing = document.createElement('div');
-          jobListing.classList.add('job-listing');
+        // display hospital listings in order of near to far
+        hospitalListings.innerHTML = '';
+        defaulthospitals.forEach(function(hospital) {
+          const hospitalListing = document.createElement('div');
+          hospitalListing.classList.add('hospital-listing');
           
-          const title = document.createElement('h2');
-          title.textContent = job.title;
-          jobListing.appendChild(title);
+          const hospitalName = document.createElement('h2');
+          hospitalName.textContent = hospital.hospitalName;
+          hospitalListing.appendChild(hospitalName);
           
-          const company = document.createElement('p');
-          company.textContent = job.company;
-          jobListing.appendChild(company);
+          const specialization = document.createElement('p');
+          specialization.textContent = hospital.specialization;
+          hospitalListing.appendChild(specialization);
           
           const location = document.createElement('p');
           location.classList.add('location');
-          location.textContent = `${job.location} (${job.distance.toFixed(2)} km away)`;
-          jobListing.appendChild(location);
+          location.textContent = `${hospital.location} (${hospital.distance.toFixed(2)} km away)`;
+          hospitalListing.appendChild(location);
           
           const description = document.createElement('p');
-          description.textContent = job.description;
-          jobListing.appendChild(description);
+          description.textContent = hospital.description;
+          hospitalListing.appendChild(description);
           
-          jobListings.appendChild(jobListing);
+          hospitalListings.appendChild(hospitalListing);
         });
       })
       .catch(error => console.log(error));
