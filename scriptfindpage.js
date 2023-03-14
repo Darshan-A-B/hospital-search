@@ -3,21 +3,28 @@ const hospitalListings = document.querySelector('#hospital-listings');
 
 // dummy data for default hospital listings
 const defaulthospitals = [
-  {
+  { 
+    hospitalimage:"images/hospitalimages/davanageredemo.png",
     hospitalName: 'Davanagere hospital demo',
     specialization: 'EYE',
     location: 'Davanagere, karnataka',
     description: 'Cheap and best treatment',
+    phone: "9110685426",
+    hospitalmap:"https://goo.gl/maps/RXAvd3TxkffrL6Wh6",
     latitude: 14.4558702,
     longitude: 75.9089417
   },
   {
+    hospitalimage:"images/hospitalimages/manipal.png",
     hospitalName: 'Manipal hospital HAL ROAD',
     specialization: 'General multi-speciality',
     location: 'Bangalore, karnataka',
     description: 'Cheap and best treatment',
+    phone: "9110685426",
+    hospitalmap:"https://goo.gl/maps/KfKhKSRG6RXwpfDE9",
     latitude: 12.9593257,
     longitude: 77.6569182
+    
   },
 ];
 
@@ -26,6 +33,13 @@ defaulthospitals.forEach(function(hospital) {
   const hospitalListing = document.createElement('div');
   hospitalListing.classList.add('hospital-listing');
   
+  // Add the hospital hospitalimage to the div
+  const img = document.createElement("img");
+  img.src = hospital.hospitalimage;
+  img.alt = `${hospital.name} hospitalimage`;
+  img.classList.add("hospital-hospitalimage");
+  hospitalListing.appendChild(img);
+
   const hospitalName = document.createElement('h2');
   hospitalName.textContent = hospital.hospitalName;
   hospitalListing.appendChild(hospitalName);
@@ -42,6 +56,21 @@ defaulthospitals.forEach(function(hospital) {
   const description = document.createElement('p');
   description.textContent = hospital.description;
   hospitalListing.appendChild(description);
+
+  // Add the hospital phone number to the div
+  const phone = document.createElement("a");
+  phone.innerText = hospital.phone;
+  phone.href = `tel:${hospital.phone}`;
+  phone.classList.add("hospital-phone");
+  hospitalListing.appendChild(phone);
+
+  // Add the google hospitalmap link to the div
+  const hospitalmap = document.createElement("a");
+  hospitalmap.innerText = "View on hospitalmap";
+  hospitalmap.href = hospital.hospitalmap;
+  hospitalmap.target = "_blank";
+  hospitalmap.classList.add("hospital-hospitalmap");
+  hospitalListing.appendChild(hospitalmap);
   
   hospitalListings.appendChild(hospitalListing);
 });
@@ -100,23 +129,44 @@ if ("geolocation" in navigator) {
         defaulthospitals.forEach(function(hospital) {
           const hospitalListing = document.createElement('div');
           hospitalListing.classList.add('hospital-listing');
-          
-          const hospitalName = document.createElement('h2');
-          hospitalName.textContent = hospital.hospitalName;
-          hospitalListing.appendChild(hospitalName);
-          
-          const specialization = document.createElement('p');
-          specialization.textContent = hospital.specialization;
-          hospitalListing.appendChild(specialization);
-          
-          const location = document.createElement('p');
-          location.classList.add('location');
-          location.textContent = `${hospital.location} (${hospital.distance.toFixed(2)} km away)`;
-          hospitalListing.appendChild(location);
-          
-          const description = document.createElement('p');
-          description.textContent = hospital.description;
-          hospitalListing.appendChild(description);
+          // Add the hospital hospitalimage to the div
+  const img = document.createElement("img");
+  img.src = hospital.hospitalimage;
+  img.alt = `${hospital.name} hospitalimage`;
+  img.classList.add("hospital-hospitalimage");
+  hospitalListing.appendChild(img);
+
+  const hospitalName = document.createElement('h2');
+  hospitalName.textContent = hospital.hospitalName;
+  hospitalListing.appendChild(hospitalName);
+  
+  const specialization = document.createElement('p');
+  specialization.textContent = hospital.specialization;
+  hospitalListing.appendChild(specialization);
+  
+  const location = document.createElement('p');
+  location.classList.add('location');
+  location.textContent = `${hospital.location}(${hospital.distance.toFixed(2)} km away)`;
+  hospitalListing.appendChild(location);
+  
+  const description = document.createElement('p');
+  description.textContent = hospital.description;
+  hospitalListing.appendChild(description);
+
+  // Add the hospital phone number to the div
+  const phone = document.createElement("a");
+  phone.innerText = hospital.phone;
+  phone.href = `tel:${hospital.phone}`;
+  phone.classList.add("hospital-phone");
+  hospitalListing.appendChild(phone);
+
+  // Add the google hospitalmap link to the div
+  const hospitalmap = document.createElement("a");
+  hospitalmap.innerText = "View on hospitalmap";
+  hospitalmap.href = hospital.hospitalmap;
+  hospitalmap.target = "_blank";
+  hospitalmap.classList.add("hospital-hospitalmap");
+  hospitalListing.appendChild(hospitalmap);
           
           hospitalListings.appendChild(hospitalListing);
         });
