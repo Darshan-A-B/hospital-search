@@ -140,7 +140,7 @@ if ("geolocation" in navigator) {
   hospitalListing.appendChild(img);
 
   const hospitalName = document.createElement('h2');
-  hospitalName.textContent = hospital.hospitalName;
+  hospitalName.textContent = `${hospital.hospitalName}&nbsp;&nbsp;(${hospital.distance.toFixed(2)} km away)`;
   hospitalListing.appendChild(hospitalName);
   
   const Specialization = document.createElement('p');
