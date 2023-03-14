@@ -140,7 +140,7 @@ if ("geolocation" in navigator) {
   hospitalListing.appendChild(img);
 
   const hospitalName = document.createElement('h2');
-  hospitalName.textContent = `${hospital.hospitalName}&nbsp;&nbsp;(${hospital.distance.toFixed(2)} km away)`;
+  hospitalName.textContent = `${hospital.hospitalName}(${hospital.distance.toFixed(2)} km away)`;
   hospitalListing.appendChild(hospitalName);
   
   const Specialization = document.createElement('p');
@@ -149,7 +149,7 @@ if ("geolocation" in navigator) {
   
   const location = document.createElement('p');
   location.classList.add('location');
-  location.textContent = `${hospital.location}&nbsp;&nbsp;(${hospital.distance.toFixed(2)} km away)`;
+  location.textContent = `${hospital.location}
   hospitalListing.appendChild(location);
   
   const description = document.createElement('p');
