@@ -5,7 +5,7 @@ const hospitalListings = document.querySelector('#hospital-listings');
 const defaulthospitals = [
   { 
     hospitalimage:"images/hospitalimages/davanageredemo.png",
-    hospitalName: 'Davanagere hospital demo',
+    hospitalName: 'Davanagere hospital demo ' ,
     Specialization: 'Specialization : EYE-Care',
     location: 'Near BIET, Davanagere, karnataka',
     // description: 'Cheap and best treatment',
@@ -16,7 +16,7 @@ const defaulthospitals = [
   },
   {
     hospitalimage:"images/hospitalimages/manipal.png",
-    hospitalName: 'Manipal hospital, HAL ROAD',
+    hospitalName: 'Manipal hospital, HAL ROAD ',
     Specialization: 'Specialization : General multi-speciality',
     location: 'OLD airport hal road, murugesh pallya, Bangalore, karnataka',
     // description: 'Cheap and best treatment',
@@ -140,7 +140,7 @@ if ("geolocation" in navigator) {
   hospitalListing.appendChild(img);
 
   const hospitalName = document.createElement('h2');
-  hospitalName.textContent = `${hospital.hospitalName}(${hospital.distance.toFixed(2)} km away)`;
+  hospitalName.textContent = `${hospital.hospitalName}(${'\xa0'}${hospital.distance.toFixed(2)} km away)`;
   hospitalListing.appendChild(hospitalName);
   
   const Specialization = document.createElement('p');
@@ -149,7 +149,7 @@ if ("geolocation" in navigator) {
   
   const location = document.createElement('p');
   location.classList.add('location');
-  location.textContent = `${hospital.location}
+  location.textContent = hospital.location;
   hospitalListing.appendChild(location);
   
   const description = document.createElement('p');
