@@ -6,9 +6,10 @@ const defaulthospitals = [
   { 
     hospitalimage:"images/hospitalimages/davanageredemo.png",
     hospitalName: 'Davanagere hospital demo ' ,
-    Specialization: 'Specialization : EYE-Care',
+    Specialization: 'EYE-Care',
+    DoctorName:'Darshan',
     location: 'Near BIET, Davanagere, karnataka',
-    // description: 'Cheap and best treatment',
+    description: 'Cheap and best treatment',
     phone: "9110685426",
     hospitalmap:"https://goo.gl/maps/RXAvd3TxkffrL6Wh6",
     latitude: 14.4558702,
@@ -17,9 +18,10 @@ const defaulthospitals = [
   {
     hospitalimage:"images/hospitalimages/manipal.png",
     hospitalName: 'Manipal hospital, HAL ROAD ',
-    Specialization: 'Specialization : General multi-speciality',
+    Specialization: 'General multi-speciality',
+    DoctorName:'Darshan',
     location: 'OLD airport hal road, murugesh pallya, Bangalore, karnataka',
-    // description: 'Cheap and best treatment',
+    description: 'Cheap and best treatment',
     phone: "9110685426",
     hospitalmap:"https://goo.gl/maps/KfKhKSRG6RXwpfDE9",
     latitude: 12.9593257,
@@ -45,17 +47,25 @@ defaulthospitals.forEach(function(hospital) {
   hospitalListing.appendChild(hospitalName);
   
   const Specialization = document.createElement('p');
-  Specialization.textContent = hospital.Specialization;
+  Specialization.textContent = "Speciality: " + hospital.Specialization;
   hospitalListing.appendChild(Specialization);
+  
+  if (hospital.DoctorName) {
+    const DoctorName = document.createElement('p');
+    DoctorName.textContent = "Dr. " + hospital.DoctorName;
+    hospitalListing.appendChild(DoctorName);
+  }
   
   const location = document.createElement('p');
   location.classList.add('location');
-  location.textContent = hospital.location;
+  location.textContent ="Address: " + hospital.location;
   hospitalListing.appendChild(location);
   
+  if (hospital.description) {
   const description = document.createElement('p');
   description.textContent = hospital.description;
   hospitalListing.appendChild(description);
+  }
 
  // Add the hospital phone button to the div
 const phone = document.createElement("button");
@@ -143,20 +153,28 @@ if ("geolocation" in navigator) {
   hospitalName.textContent = `${hospital.hospitalName}(${'\xa0'}${hospital.distance.toFixed(2)} km away)`;
   hospitalListing.appendChild(hospitalName);
   
-  const Specialization = document.createElement('p');
-  Specialization.textContent = hospital.Specialization;
+    const Specialization = document.createElement('p');
+  Specialization.textContent = "Speciality: " + hospital.Specialization;
   hospitalListing.appendChild(Specialization);
+  
+  if (hospital.DoctorName) {
+    const DoctorName = document.createElement('p');
+    DoctorName.textContent = "Dr. " + hospital.DoctorName;
+    hospitalListing.appendChild(DoctorName);
+  }
   
   const location = document.createElement('p');
   location.classList.add('location');
-  location.textContent = hospital.location;
+  location.textContent ="Address: " + hospital.location;
   hospitalListing.appendChild(location);
   
+  if (hospital.description){
   const description = document.createElement('p');
   description.textContent = hospital.description;
   hospitalListing.appendChild(description);
-
-// Add the hospital phone button to the div
+  }
+  
+ // Add the hospital phone button to the div
 const phone = document.createElement("button");
 phone.innerText = "Call";
 phone.type = "button";
@@ -172,7 +190,6 @@ hospitalmapButton.onclick = function() {
 };
 hospitalmapButton.classList.add("hospital-hospitalmap-button");
 hospitalListing.appendChild(hospitalmapButton);
-
           
           hospitalListings.appendChild(hospitalListing);
         });
