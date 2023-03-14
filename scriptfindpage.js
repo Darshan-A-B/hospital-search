@@ -149,7 +149,7 @@ if ("geolocation" in navigator) {
   
   const location = document.createElement('p');
   location.classList.add('location');
-  location.textContent = `${hospital.location}(${hospital.distance.toFixed(2)} km away)`;
+  location.textContent = `${hospital.location}&nbsp;&nbsp;(${hospital.distance.toFixed(2)} km away)`;
   hospitalListing.appendChild(location);
   
   const description = document.createElement('p');
