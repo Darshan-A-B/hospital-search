@@ -8,27 +8,48 @@
     <head>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     </head>
-    
   </head>
   <body>
     <header>
-      <h1>Hospitals near you</h1>
+      <h2>Hospitals near your area</h2>
+      <h4>Why wait at hospital ! Get online appointment</h4>
     </header>
-    
     <main>
       <form>
-        
         <input disabled type="text" id="location" placeholder=" &nbsp; &nbsp;Location">
-        <button type="submit" id="search-btn"><i class="fa fa-crosshairs" style="font-size:13px"></i> &nbsp;Locate Me</button>
-        
+        <button type="submit" id="search-btn">
+          <i class="fa fa-crosshairs" style="font-size:13px"></i> &nbsp;Locate Me </button>
       </form>
-     
+
+       
+  <div>
+    <label for="city">City:</label>
+    <select name="city" id="city">
+      <option value="Davanagere">Davanagere</option>
+      <option value="Bangalore">Bangalore</option>
+      <option value="Mumbai">Mumbai</option>
+      <!-- add more cities as needed -->
+    </select>
+  </div>
+  <div>
+    <label for="specialty">Specialty:</label>
+    <select name="specialty" id="specialty">
+      <option value="">Select a Specialty</option>
+      <option value="General">General</option>
+      <option value="Cardiology">Cardiology</option>
+      <option value="Oncology">Oncology</option>
+      <!-- add more specialties as needed -->
+    </select>
+  </div>
+
+<div id="hospital-listings"></div>
+
+
 
       <section id="hospital-listings">
         <!-- hospital listings will be displayed here -->
       </section>
     </main>
-    
     <script src="scriptfindpage.js"></script>
   </body>
 </html>
