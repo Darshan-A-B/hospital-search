@@ -13,16 +13,6 @@ const defaulthospitals = [
      "longitude": 75.9089417,
      "city": "Davanagere",
    },
-   {
-    "hospitalid": 2,
-    "hospitalimage": "images/hospitalimages/aastha.jpg",
-    "hospitalName": "Demo",
-    "Speciality": "General",
-    "location": "Biet, davanagere, Karnataka - 577004",
-    "latitude": 14.4558702,
-    "longitude": 75.9089417,
-    "city": "Davanagere",
-  },
  ];
  
  const cityInput = document.querySelector('#city');
@@ -45,37 +35,72 @@ const defaulthospitals = [
  );
  
  function filterHospitals() {
-  const selectedCity = cityInput.value;
-  const selectedSpecialty = specialtyInput.value;
-     
-  // filter hospitals based on selected city and specialty
-  const filteredHospitals = defaulthospitals.filter(function(hospital) {
-    return hospital.city === selectedCity && 
-           (selectedSpecialty === '' || hospital.Speciality === selectedSpecialty);
-  });
-  
-  // display filtered hospital listings
-  hospitalListings.innerHTML = '';
-  filteredHospitals.forEach(function(hospital) {
-    const hospitalListing = document.createElement('div');
-    hospitalListing.classList.add('hospital-listing');
-  
-    const hospitalName = document.createElement('h2');
-    hospitalName.textContent = hospital.hospitalName;
-    hospitalListing.appendChild(hospitalName);
-  
-    const Speciality = document.createElement('p');
-    Speciality.textContent = "Speciality: " + hospital.Speciality;
-    hospitalListing.appendChild(Speciality);
-  
-    const location = document.createElement('p');
-    location.classList.add('location');
-    location.textContent = "Address: " + hospital.location;
-    hospitalListing.appendChild(location);
-  
-    hospitalListings.appendChild(hospitalListing);
-  });
-}
+   const selectedCity = cityInput.value;
+   const selectedSpecialty = specialtyInput.value;
+ 
+   // get user's current position
+   navigator.geolocation.getCurrentPosition(function (position) {
+     const latitude = position.coords.latitude;
+     const longitude = position.coords.longitude;
+ 
+     // reverse geocode the coordinates to get the user's city and state
+     fetch(
+       `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+     )
+       .then((response) => response.json())
+       .then((data) => {
+         const city = data.address.city || data.address.town;
+ 
+         // filter hospitals based on selected city and specialty
+         const filteredHospitals = defaulthospitals.filter(function (hospital) {
+           return (
+             hospital.city === selectedCity &&
+             (selectedSpecialty === "" || hospital.Speciality === selectedSpecialty)
+           );
+         });
+ 
+         // update distance for each hospital listing
+         filteredHospitals.forEach(function (hospital) {
+           const distance = getDistance(
+             latitude,
+             longitude,
+             hospital.latitude,
+             hospital.longitude
+           );
+           hospital.distance = distance;
+         });
+ 
+         // sort hospitals by distance from user's location
+         filteredHospitals.sort(function (a, b) {
+           return a.distance - b.distance;
+         });
+ 
+         // display filtered hospital listings
+         hospitalListings.innerHTML = "";
+         filteredHospitals.forEach(function (hospital) {
+           const hospitalListing = document.createElement("div");
+           hospitalListing.classList.add("hospital-listing");
+ 
+           const hospitalName = document.createElement("h2");
+           hospitalName.textContent = `${hospital.hospitalName}(${'\xa0'}${hospital.distance.toFixed(
+             2
+           )} km away)`;
+           hospitalListing.appendChild(hospitalName);
+ 
+           const Speciality = document.createElement("p");
+           Speciality.textContent = "Speciality: " + hospital.Speciality;
+           hospitalListing.appendChild(Speciality);
+ 
+           const location = document.createElement("p");
+           location.classList.add("location");
+           location.textContent = "Address: " + hospital.location;
+           hospitalListing.appendChild(location);
+ 
+           hospitalListings.appendChild(hospitalListing);
+         });
+       });
+   });
+ }
  
  cityInput.addEventListener("change", filterHospitals);
  specialtyInput.addEventListener("change", filterHospitals);
@@ -106,52 +131,34 @@ if ("geolocation" in navigator) {
          defaulthospitals.sort(function(a, b) {
            return a.distance - b.distance;
          });
-
-          
- function filterHospitals() {
-  const selectedCity = cityInput.value;
-  const selectedSpecialty = specialtyInput.value;
-     
-  // filter hospitals based on selected city and specialty
-  const filteredHospitals = defaulthospitals.filter(function(hospital) {
-    return hospital.city === selectedCity && 
-           (selectedSpecialty === '' || hospital.Speciality === selectedSpecialty);
-  });
-  
-  // display filtered hospital listings
-  hospitalListings.innerHTML = '';
-  filteredHospitals.forEach(function(hospital) {
-    const hospitalListing = document.createElement('div');
-    hospitalListing.classList.add('hospital-listing');
-  
-    const hospitalName = document.createElement('h2');
+ 
+         // display hospital listings in order of near to far
+         hospitalListings.innerHTML = '';
+         defaulthospitals.forEach(function(hospital) {
+           const hospitalListing = document.createElement('div');
+           hospitalListing.classList.add('hospital-listing');
+ 
+           const hospitalName = document.createElement('h2');
            hospitalName.textContent = `${hospital.hospitalName}(${'\xa0'}${hospital.distance.toFixed(2)} km away)`;
            hospitalListing.appendChild(hospitalName);
-  
-    const Speciality = document.createElement('p');
-    Speciality.textContent = "Speciality: " + hospital.Speciality;
-    hospitalListing.appendChild(Speciality);
-  
-    const location = document.createElement('p');
-    location.classList.add('location');
-    location.textContent = "Address: " + hospital.location;
-    hospitalListing.appendChild(location);
-  
-    hospitalListings.appendChild(hospitalListing);
-  });
-}
  
- cityInput.addEventListener("change", filterHospitals);
- specialtyInput.addEventListener("change", filterHospitals);
+           const Speciality = document.createElement('p');
+           Speciality.textContent = "Speciality: " + hospital.Speciality;
+           hospitalListing.appendChild(Speciality);
  
-
+           const location = document.createElement('p');
+           location.classList.add('location');
+           location.textContent = "Address: " + hospital.location;
+           hospitalListing.appendChild(location);
+ 
+           hospitalListings.appendChild(hospitalListing);
+         });
        })
        .catch(error => {
          console.log(error);
        });
    });
  }
-
  // function to calculate distance between two coordinates using Haversine formula
 function getDistance(lat1, lon1, lat2, lon2) {
    const R = 6371; // radius of the earth in kilometers
